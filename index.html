@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CleanFlow | Municipal Sewage Management Portal</title>
+<style>
+:root{
+  --navy:#12304a; --blue:#1769aa; --cyan:#0b9bc4; --teal:#138a72;
+  --bg:#f4f7fa; --card:#fff; --text:#183142; --muted:#607585;
+  --border:#dbe4ea; --danger:#c74747; --warn:#bd7a13; --success:#16845d;
+  --shadow:0 10px 30px rgba(18,48,74,.08); --radius:18px;
+}
+*{box-sizing:border-box} html{scroll-behavior:smooth}
+body{margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:var(--bg);color:var(--text)}
+a{text-decoration:none;color:inherit}.container{max-width:1200px;margin:auto;padding:0 22px}
+.topbar{background:var(--navy);color:#fff;font-size:13px}.topbar .container{display:flex;justify-content:space-between;gap:15px;padding:8px 22px}
+nav{background:#fff;border-bottom:1px solid var(--border);position:sticky;top:0;z-index:20}.nav-inner{height:72px;display:flex;align-items:center;justify-content:space-between;gap:20px}
+.brand{display:flex;align-items:center;gap:12px;font-weight:800;color:var(--navy)}.brand-mark{width:42px;height:42px;border-radius:12px;background:linear-gradient(135deg,var(--blue),var(--cyan));display:grid;place-items:center;color:#fff;font-size:21px}
+.navlinks{display:flex;gap:22px;align-items:center;font-size:14px;font-weight:650}.navlinks a:hover{color:var(--blue)}
+.menu{display:none;border:0;background:none;font-size:25px}.btn{border:0;border-radius:11px;padding:11px 16px;font-weight:750;cursor:pointer}.btn-primary{background:var(--blue);color:#fff}.btn-outline{border:1px solid var(--blue);background:#fff;color:var(--blue)}
+.hero{background:linear-gradient(115deg,#102f49 0%,#145b82 55%,#0b9bc4 100%);color:#fff;padding:68px 0 76px}.hero-grid{display:grid;grid-template-columns:1.2fr .8fr;gap:45px;align-items:center}
+.eyebrow{display:inline-flex;gap:8px;align-items:center;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);padding:7px 11px;border-radius:999px;font-size:12px;font-weight:700}
+.hero h1{font-size:clamp(36px,5vw,60px);line-height:1.04;margin:18px 0 18px;letter-spacing:-1.5px}.hero p{font-size:18px;line-height:1.65;color:#dcecf5;max-width:680px}.hero-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:25px}.btn-light{background:#fff;color:var(--navy)}
+.hero-card{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.22);backdrop-filter:blur(12px);border-radius:22px;padding:22px}.hero-card h3{margin:0 0 16px}.live{display:flex;justify-content:space-between;padding:13px 0;border-bottom:1px solid rgba(255,255,255,.16);font-size:14px}.live:last-child{border:0}.dot{width:8px;height:8px;border-radius:50%;background:#5be49a;display:inline-block;margin-right:7px}
+.section{padding:58px 0}.section-head{display:flex;justify-content:space-between;align-items:end;gap:20px;margin-bottom:25px}.section h2{font-size:30px;margin:0 0 7px;color:var(--navy)}.section-head p{margin:0;color:var(--muted)}
+.cards{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}.card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:20px}.stat-icon{width:40px;height:40px;border-radius:12px;background:#e9f5fb;color:var(--blue);display:grid;place-items:center;font-size:19px}.stat h3{font-size:29px;margin:15px 0 4px}.stat p{margin:0;color:var(--muted);font-size:13px}.trend{color:var(--success);font-size:12px;font-weight:700;margin-top:10px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:20px}.grid3{display:grid;grid-template-columns:1.2fr .8fr;gap:20px}.panel-title{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px}.panel-title h3{margin:0;color:var(--navy)}.table{width:100%;border-collapse:collapse;font-size:14px}.table th,.table td{text-align:left;padding:13px 10px;border-bottom:1px solid var(--border)}.table th{color:var(--muted);font-size:12px;text-transform:uppercase;letter-spacing:.5px}.badge{padding:5px 9px;border-radius:999px;font-size:11px;font-weight:750}.ok{background:#e8f7f0;color:#11704e}.pending{background:#fff3df;color:#9a6410}.critical{background:#fdeaea;color:#aa3d3d}
+.chart{height:235px;display:flex;align-items:end;gap:13px;padding:20px 5px 5px}.bar-wrap{height:100%;flex:1;display:flex;flex-direction:column;justify-content:end;align-items:center;gap:7px}.bar{width:100%;max-width:45px;border-radius:7px 7px 3px 3px;background:linear-gradient(#19a4ca,#1769aa);min-height:12px}.bar-label{font-size:11px;color:var(--muted)}.bar-val{font-size:11px;font-weight:750}
+.donut{width:170px;height:170px;border-radius:50%;background:conic-gradient(var(--blue) 0 72%,#58b9ca 72% 90%,#d9e8ee 90% 100%);position:relative;margin:12px auto}.donut:after{content:"72%";position:absolute;inset:32px;background:#fff;border-radius:50%;display:grid;place-items:center;font-size:28px;font-weight:800;color:var(--navy)}
+.legend{display:flex;justify-content:center;gap:16px;flex-wrap:wrap;font-size:12px;color:var(--muted)}.legend i{display:inline-block;width:9px;height:9px;border-radius:3px;margin-right:5px;background:var(--blue)}.legend i.b{background:#58b9ca}.legend i.c{background:#d9e8ee}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:15px}.field{display:flex;flex-direction:column;gap:7px}.field.full{grid-column:1/-1}.field label{font-size:13px;font-weight:700}.field input,.field select,.field textarea{width:100%;border:1px solid var(--border);border-radius:10px;padding:12px;background:#fff;font:inherit;color:var(--text)}textarea{min-height:105px;resize:vertical}
+.notice{display:flex;gap:14px;padding:14px 0;border-bottom:1px solid var(--border)}.notice:last-child{border:0}.notice-icon{font-size:20px}.notice b{display:block;margin-bottom:4px}.notice span{font-size:12px;color:var(--muted)}
+.footer{background:var(--navy);color:#d6e4ed;padding:42px 0 20px}.footer-grid{display:grid;grid-template-columns:1.3fr 1fr 1fr;gap:30px}.footer h3{color:#fff}.footer a{display:block;margin:8px 0;font-size:14px}.copyright{border-top:1px solid rgba(255,255,255,.12);margin-top:28px;padding-top:18px;font-size:12px;text-align:center}
+.modal{position:fixed;inset:0;background:rgba(4,20,30,.62);display:none;align-items:center;justify-content:center;padding:20px;z-index:50}.modal.show{display:flex}.modal-box{background:#fff;border-radius:18px;width:min(560px,100%);padding:25px;box-shadow:0 25px 70px rgba(0,0,0,.25)}.modal-head{display:flex;justify-content:space-between;align-items:center}.close{border:0;background:#eef3f6;border-radius:8px;width:34px;height:34px;cursor:pointer}.success-box{background:#eaf8f1;border:1px solid #bfe8d5;border-radius:12px;padding:15px;margin-top:15px;display:none}.small{font-size:12px;color:var(--muted)}
+@media(max-width:900px){.hero-grid,.grid3,.grid2{grid-template-columns:1fr}.cards{grid-template-columns:repeat(2,1fr)}.navlinks{display:none}.menu{display:block}.footer-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:560px){.cards,.form-grid{grid-template-columns:1fr}.field.full{grid-column:auto}.topbar .container{font-size:11px}.hero{padding:48px 0}.hero h1{font-size:39px}.footer-grid{grid-template-columns:1fr}.section{padding:42px 0}}
+</style>
+</head>
+<body>
+<div class="topbar"><div class="container"><span>Government Civic Services • Sewage & Wastewater Management</span><span>Demo / College Project Portal</span></div></div>
+<nav><div class="container nav-inner">
+  <a class="brand" href="#home"><span class="brand-mark">💧</span><span>CleanFlow<br><small style="font-weight:600;color:#607585">Sewage Management</small></span></a>
+  <button class="menu" onclick="toggleMenu()">☰</button>
+  <div class="navlinks" id="navlinks"><a href="#home">Home</a><a href="#dashboard">Dashboard</a><a href="#services">Services</a><a href="#complaint">Report Issue</a><a href="#notices">Notices</a><a href="#contact">Contact</a></div>
+</div></nav>
+
+<header class="hero" id="home"><div class="container hero-grid">
+  <div><span class="eyebrow">● SYSTEM STATUS: OPERATIONAL</span>
+    <h1>Smarter sewage management for cleaner communities.</h1>
+    <p>A modern civic platform for monitoring wastewater networks, managing sewage treatment plants, resolving public complaints, and improving environmental outcomes.</p>
+    <div class="hero-actions"><a class="btn btn-light" href="#dashboard">View live dashboard</a><button class="btn btn-outline" style="background:transparent;color:#fff;border-color:#fff" onclick="openModal()">Report a sewage issue</button></div>
+  </div>
+  <div class="hero-card"><h3>Network overview</h3>
+    <div class="live"><span><span class="dot"></span>STP operations</span><b>Normal</b></div>
+    <div class="live"><span>Network coverage</span><b>94.2%</b></div>
+    <div class="live"><span>Daily treatment</span><b>118 MLD</b></div>
+    <div class="live"><span>Open complaints</span><b>27</b></div>
+    <div class="live"><span>Last sync</span><b>2 min ago</b></div>
+  </div>
+</div></header>
+
+<section class="section" id="dashboard"><div class="container">
+<div class="section-head"><div><h2>Operations dashboard</h2><p>Illustrative real-time metrics for the college project demonstration.</p></div><span class="badge ok">● All core systems healthy</span></div>
+<div class="cards">
+  <div class="card stat"><div class="stat-icon">🚰</div><h3>118 MLD</h3><p>Wastewater treated today</p><div class="trend">↑ 6.4% vs last month</div></div>
+  <div class="card stat"><div class="stat-icon">🛠️</div><h3>27</h3><p>Active public complaints</p><div class="trend">↓ 12% this week</div></div>
+  <div class="card stat"><div class="stat-icon">🏭</div><h3>8 / 8</h3><p>STP units operational</p><div class="trend">100% availability</div></div>
+  <div class="card stat"><div class="stat-icon">💧</div><h3>96.8%</h3><p>Water-quality compliance</p><div class="trend">↑ 1.8% this quarter</div></div>
+</div>
+<div class="grid2" style="margin-top:20px">
+  <div class="card"><div class="panel-title"><h3>Monthly treatment volume</h3><span class="small">MLD • illustrative</span></div>
+    <div class="chart" id="chart"></div>
+  </div>
+  <div class="card"><div class="panel-title"><h3>Complaint resolution</h3><span class="small">Current month</span></div>
+    <div class="donut"></div><div class="legend"><span><i></i>Resolved 72%</span><span><i class="b"></i>In progress 18%</span><span><i class="c"></i>Pending 10%</span></div>
+  </div>
+</div>
+<div class="grid3" style="margin-top:20px">
+  <div class="card"><div class="panel-title"><h3>Recent complaints</h3><button class="btn btn-outline" onclick="openModal()">New complaint</button></div>
+    <table class="table"><thead><tr><th>ID</th><th>Area</th><th>Issue</th><th>Status</th></tr></thead><tbody id="complaintRows"></tbody></table>
+  </div>
+  <div class="card"><div class="panel-title"><h3>STP performance</h3><span class="badge ok">Healthy</span></div>
+    <p class="small">Treatment capacity utilization</p><div style="font-size:36px;font-weight:800;color:var(--navy)">78%</div>
+    <div style="height:10px;background:#e7eef2;border-radius:99px;margin:10px 0 18px"><div style="height:100%;width:78%;background:linear-gradient(90deg,var(--cyan),var(--blue));border-radius:99px"></div></div>
+    <div class="small">Current load: <b>118 MLD</b> · Available capacity: <b>151 MLD</b></div>
+  </div>
+</div>
+</div></section>
+
+<section class="section" id="services" style="background:#fff"><div class="container"><div class="section-head"><div><h2>Citizen services</h2><p>Simple digital services for faster civic response.</p></div></div>
+<div class="cards">
+  <div class="card"><div class="stat-icon">🚨</div><h3>Report blockage</h3><p class="small">Report overflowing drains, blocked sewer lines, or damaged manholes.</p><button class="btn btn-primary" style="margin-top:15px" onclick="openModal()">Report now</button></div>
+  <div class="card"><div class="stat-icon">🔎</div><h3>Track complaint</h3><p class="small">Enter your complaint ID to view the latest status and response.</p><button class="btn btn-outline" style="margin-top:15px" onclick="trackComplaint()">Track status</button></div>
+  <div class="card"><div class="stat-icon">🧪</div><h3>Water quality</h3><p class="small">View sample indicators and compliance information from treatment facilities.</p><button class="btn btn-outline" style="margin-top:15px" onclick="alert('Demo: Water-quality module opened. All illustrative samples are within project limits.')">View data</button></div>
+  <div class="card"><div class="stat-icon">📄</div><h3>Public reports</h3><p class="small">Access monthly performance summaries and environmental reports.</p><button class="btn btn-outline" style="margin-top:15px" onclick="downloadReport()">Download</button></div>
+</div></div></section>
+
+<section class="section" id="complaint"><div class="container grid2">
+<div><h2>Raise a civic issue</h2><p style="color:var(--muted);line-height:1.7">Submit a sewage-related issue through the demonstration form. A unique complaint ID is generated automatically.</p>
+<div class="card" style="margin-top:20px"><div class="notice"><span class="notice-icon">⚡</span><div><b>Fast response workflow</b><span>Complaint → field team assignment → inspection → resolution → citizen update.</span></div></div>
+<div class="notice"><span class="notice-icon">📍</span><div><b>Location-aware reporting</b><span>Provide your locality and landmark so the field team can identify the service point.</span></div></div>
+<div class="notice"><span class="notice-icon">🔐</span><div><b>Demo privacy</b><span>Use fictional information for this college presentation. This portal does not submit data to a real authority.</span></div></div></div></div>
+<div class="card"><form id="complaintForm" onsubmit="submitComplaint(event)"><div class="form-grid">
+<div class="field"><label>Citizen name</label><input id="name" required placeholder="e.g. Rahul Sharma"></div>
+<div class="field"><label>Mobile number</label><input id="phone" required pattern="[0-9]{10}" placeholder="10-digit number"></div>
+<div class="field"><label>Locality / ward</label><input id="area" required placeholder="e.g. Ward 12, Civil Lines"></div>
+<div class="field"><label>Issue type</label><select id="issue"><option>Blocked sewer line</option><option>Overflowing manhole</option><option>Damaged sewer cover</option><option>Bad odour</option><option>Other</option></select></div>
+<div class="field full"><label>Landmark</label><input id="landmark" required placeholder="Nearby road, school, market, etc."></div>
+<div class="field full"><label>Issue description</label><textarea id="desc" required placeholder="Briefly describe the issue..."></textarea></div>
+<div class="field full"><button class="btn btn-primary" type="submit">Submit complaint</button></div>
+</div></form><div class="success-box" id="success"></div></div>
+</div></section>
+
+<section class="section" id="notices" style="background:#fff"><div class="container grid2"><div><h2>Public notices</h2><p style="color:var(--muted)">Illustrative announcements for the portal demo.</p></div>
+<div class="card"><div class="notice"><span class="notice-icon">📢</span><div><b>Scheduled sewer-line maintenance</b><span>North Zone · 14 September · 10:00 AM–3:00 PM</span></div></div>
+<div class="notice"><span class="notice-icon">🧪</span><div><b>Monthly water-quality monitoring</b><span>Sample testing completed at all 8 demonstration STPs.</span></div></div>
+<div class="notice"><span class="notice-icon">🚧</span><div><b>Temporary service disruption</b><span>Central Ward pipeline inspection is scheduled this week.</span></div></div></div></div></section>
+
+<footer class="footer" id="contact"><div class="container footer-grid"><div><h3>CleanFlow</h3><p style="line-height:1.7;font-size:14px">A professional sewage-management portal concept created for academic demonstration and presentation purposes.</p></div><div><h3>Quick links</h3><a href="#dashboard">Dashboard</a><a href="#services">Citizen services</a><a href="#complaint">Report issue</a><a href="#notices">Public notices</a></div><div><h3>Demo contact</h3><p style="font-size:14px">Municipal Sewage Control Room</p><p style="font-size:14px">Helpline: 1800-000-2026</p><p style="font-size:14px">Email: help@cleanflow.demo</p></div></div><div class="container copyright">© 2026 CleanFlow Academic Project · Not an official government website</div></footer>
+
+<div class="modal" id="modal"><div class="modal-box"><div class="modal-head"><h3>Report sewage issue</h3><button class="close" onclick="closeModal()">✕</button></div><p class="small">For the demo, submit fictional information.</p><form onsubmit="submitModal(event)"><div class="field"><label>Name</label><input id="mname" required></div><div class="field" style="margin-top:12px"><label>Area</label><input id="marea" required></div><div class="field" style="margin-top:12px"><label>Issue</label><select id="missue"><option>Blocked sewer line</option><option>Overflowing manhole</option><option>Damaged cover</option><option>Bad odour</option></select></div><button class="btn btn-primary" style="margin-top:15px;width:100%">Generate complaint ID</button></form></div></div>
+
+<script>
+const months=[{m:'Apr',v:102},{m:'May',v:108},{m:'Jun',v:105},{m:'Jul',v:112},{m:'Aug',v:115},{m:'Sep',v:118}];
+document.getElementById('chart').innerHTML=months.map(x=>`<div class="bar-wrap"><div class="bar-val">${x.v}</div><div class="bar" style="height:${x.v/125*180}px"></div><div class="bar-label">${x.m}</div></div>`).join('');
+const complaints=[
+ ['CF-26091','Ward 12','Blocked line','In progress'],
+ ['CF-26088','Civil Lines','Overflowing manhole','Resolved'],
+ ['CF-26084','North Zone','Damaged cover','Pending'],
+ ['CF-26079','Ward 08','Bad odour','Resolved'],
+ ['CF-26071','Central Ward','Blocked line','Resolved']
+];
+document.getElementById('complaintRows').innerHTML=complaints.map(c=>`<tr><td><b>${c[0]}</b></td><td>${c[1]}</td><td>${c[2]}</td><td><span class="badge ${c[3]=='Resolved'?'ok':c[3]=='Pending'?'pending':'pending'}">${c[3]}</span></td></tr>`).join('');
+function openModal(){document.getElementById('modal').classList.add('show')}
+function closeModal(){document.getElementById('modal').classList.remove('show')}
+function submitModal(e){e.preventDefault();const id='CF-'+Math.floor(10000+Math.random()*89999);closeModal();alert('Complaint registered successfully!\\nYour demo complaint ID is '+id+'\\nStatus: Assigned to field team');}
+function submitComplaint(e){e.preventDefault();const id='CF-'+Math.floor(10000+Math.random()*89999);const s=document.getElementById('success');s.style.display='block';s.innerHTML=`<b>Complaint submitted successfully.</b><br>Your complaint ID is <strong>${id}</strong>. Keep this ID to track the demo request.`;e.target.reset();s.scrollIntoView({behavior:'smooth',block:'center'});}
+function trackComplaint(){const id=prompt('Enter your complaint ID (try CF-26091):');if(!id)return;alert('Complaint '+id.toUpperCase()+'\\n\\nStatus: In progress\\nAssigned team: Sewer Response Team 03\\nLast update: 12 minutes ago\\nExpected inspection: Today');}
+function downloadReport(){const content='CLEANFLOW — MONTHLY SEWAGE MANAGEMENT REPORT\\nAcademic Demonstration Data\\n\\nTreatment volume: 118 MLD\\nSTP units operational: 8/8\\nWater-quality compliance: 96.8%\\nActive complaints: 27\\nResolution rate: 72%\\n\\nNote: All data is illustrative and intended for a college project.';const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([content],{type:'text/plain'}));a.download='CleanFlow_Monthly_Report.txt';a.click();}
+function toggleMenu(){const n=document.getElementById('navlinks');n.style.display=n.style.display==='flex'?'none':'flex';n.style.position='absolute';n.style.top='72px';n.style.left='0';n.style.right='0';n.style.background='#fff';n.style.padding='20px';n.style.flexDirection='column';n.style.borderBottom='1px solid #dbe4ea'}
+document.getElementById('modal').addEventListener('click',e=>{if(e.target.id==='modal')closeModal()});
+</script>
+</body>
+</html>
